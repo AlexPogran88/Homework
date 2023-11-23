@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 align="center">Вся наша мебель</h1>
+
+{% if page_obj %}
+<div class="row justify-content-center">
+    <div class="col-auto">
+        <table class="table table-responsive">
+            <thead>
+            <tr>
+                <th scope="col">Цена</th>
+                <th scope="col">Описание</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for mebel in page_obj %}
+            <tr>
+                <td scope="row"><a href={{mebel.link}}>{{mebel.price}}</a></td>
+                <td>{{mebel.description}}</td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<h2>К сожалению мебели ещё нету</h2>
+{% endif %}
+
+<head>
+    <style>
+        .center {
+            text-align: center;
+        }
+
+        .pagination {
+            display: inline-block;
+        }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+            border: 1px solid #ddd;
+            margin: 0 4px;
+        }
+
+        .pagination a.active {
+            background-color: #4CAF50;
+            color: white;
+            border: 1px solid #4CAF50;
+        }
+
+        .pagination a:hover:not(.active) {background-color: #ddd;}
+    </style>
+</head>
+<body>
+
+
+<div class="center">
+    <div class="pagination">
+        <a href="#">«</a>
+        {% for p in page_obj.paginator.page_range %}
+        <a href="?page={{ p }}">{{ p }}</a>
+        {% endfor %}
+        <a href="#">»</a>
+    </div>
+</div>
+
+</body>
+{% endblock %}
